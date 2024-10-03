@@ -1,4 +1,4 @@
-from .models import Event
+from .models import Event, Comment
 from rest_framework import serializers
 
 
@@ -16,4 +16,9 @@ class EventSerializer(serializers.ModelSerializer):
         if not attrs.get('location'):
             raise serializers.ValidationError("Location is required.")
         return attrs
-    
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'event', 'content', 'created_date']
+        read_only_fields = ['user', 'created_date']

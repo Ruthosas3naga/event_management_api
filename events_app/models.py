@@ -43,3 +43,13 @@ class Event(models.Model):
             self.save()
         else:
             raise ValidationError("Event is at full capacity")
+
+
+class Comment(models.Model):
+    event = models.ForeignKey(Event, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='comments', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user} on {self.event}'

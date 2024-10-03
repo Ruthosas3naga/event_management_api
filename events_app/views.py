@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from .serializers import EventSerializer
-from models import Event
+from .serializers import EventSerializer, CommentSerializer
+from models import Event, Comment
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
@@ -97,3 +97,12 @@ class EventRegistrationView(generics.UpdateAPIView):
             return Response({"message": "Registration successful"})
         except ValidationError as e:
             return Response({"error": str(e)}, status=400)
+        
+class CommentListCreateView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes =[permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
