@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class EventPagination(PageNumberPagination):
     page_size = 5
 
-class IsOwnerOrReadOnly(permissions.Basepermission):
+class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
