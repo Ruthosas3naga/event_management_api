@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from .serializers import EventSerializer, CommentSerializer
-from models import Event, Comment
+from . models import Event, Comment
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
