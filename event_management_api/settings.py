@@ -25,7 +25,7 @@ SECRET_KEY = '&b&&yy-&9+#4)rpem@ueg$)@c3!f(f#qm32mpb*1+x6awo=+&c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 
@@ -84,13 +84,13 @@ TEMPLATES = [
     },
 ]
 
-# Security settings
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
-SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
-CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
+# # Security settings
+# SECURE_BROWSER_XSS_FILTER = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
+# SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
+# CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
 
 
 WSGI_APPLICATION = 'event_management_api.wsgi.application'
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'event_management_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'osas',
+        'NAME': 'osase',
         'USER': 'osas',
         'PASSWORD': 'osas1234',
         'HOST': 'localhost',
