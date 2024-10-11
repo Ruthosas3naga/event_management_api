@@ -104,6 +104,8 @@ WSGI_APPLICATION = 'event_management_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 import dj_database_url
+
+import django_heroku
 import os
 
 DATABASES = {
@@ -167,4 +169,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.CustomUser'
 
-
+django_heroku.settings(locals())
