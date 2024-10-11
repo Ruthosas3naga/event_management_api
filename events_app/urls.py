@@ -9,13 +9,12 @@ from .views import (
     NotificationMarkAsReadView,
     CommentDetailView
 )
-from rest_framework.authtoken.views import obtain_auth_token
+
 
 # other imports and view definitions
 
 
 urlpatterns = [
-    path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
     path('events/', EventListCreateView.as_view(), name='event-list-create'),
     path('events/<int:pk>/', EventDetailView.as_view(), name='event-detail'),
     path('events/<int:pk>/register/', EventRegistrationView.as_view(), name='event-register'),
