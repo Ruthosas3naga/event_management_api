@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from .serializers import EventSerializer, CommentSerializer
-from . models import Event, Comment
+from .serializers import EventSerializer, CommentSerializer, NotificationSerializer
+from . models import Event, Comment, Notification
 from rest_framework import generics, permissions, status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.pagination import PageNumberPagination
 from .filters import EventFilter
@@ -19,6 +20,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         return obj.organizer == request.user.username
     
+    #CRUD OPERATIONS
+#Create view
 class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -44,11 +47,12 @@ class EventListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(organizer=self.request.user.username)
 
-
+#Get detail view
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsOwnerOrReadOnly]
+    
 
     # Retrieve a specific event (GET)
     def get(self, request, *args, **kwargs):
@@ -59,7 +63,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Event.DoesNotExist:
             raise NotFound(detail="Event not found")
 
-    # Update a specific event (PUT)
+# Update a specific event (PUT)
     def put(self, request, *args, **kwargs):
         try:
             event = self.get_object()
@@ -84,10 +88,11 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
        if instance.organizer != self.request.user.username:
            raise PermissionDenied("You do not have access to this service")
        instance.delete()
-    
+
+#Update view  
 class EventRegistrationView(generics.UpdateAPIView):
     queryset = Event.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         event = self.get_object()
@@ -97,12 +102,47 @@ class EventRegistrationView(generics.UpdateAPIView):
             return Response({"message": "Registration successful"})
         except ValidationError as e:
             return Response({"error": str(e)}, status=400)
-        
+
+
 class CommentListCreateView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes =[permissions.IsAuthenticatedOrReadOnly]
+    permission_classes =[IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-        
+
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        # Optional: Limit comments to the authenticated user
+        user = self.request.user
+        return self.queryset.filter(user=user)  # Optional: only allow users to modify their comments
+
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    
+
+    def get_queryset(self):
+        """Return notifications for the current authenticated user."""
+        return Notification.objects.filter(user=self.request.user).order_by('-created_date')
+
+class NotificationDetailView(generics.RetrieveAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+#UPDATE (Mark as READ)
+class NotificationMarkAsReadView(generics.UpdateAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_update(self, serializer):
+        """Mark the notification as read."""
+        instance = serializer.save(is_read=True)
