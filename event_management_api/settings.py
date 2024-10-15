@@ -119,8 +119,8 @@ WSGI_APPLICATION = 'event_management_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-import dj_database_url
 
+import dj_database_url
 import django_heroku
 import os
 
@@ -135,8 +135,13 @@ DATABASES = {
         }
     }
 
+# Use dj_database_url to configure the database for production
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=True)
 
-
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -172,7 +177,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-import dj_database_url
+
 import os
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
