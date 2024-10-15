@@ -105,13 +105,13 @@ TEMPLATES = [
     },
 ]
 
-# Security settings
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
-SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
-CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
+# # Security settings
+# SECURE_BROWSER_XSS_FILTER = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
+# SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
+# CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
 
 
 WSGI_APPLICATION = 'event_management_api.wsgi.application'

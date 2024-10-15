@@ -105,16 +105,7 @@ class EventRegistrationView(generics.UpdateAPIView):
         if getattr(self, 'swagger_fake_view', False):
             return None
         return EventRegistrationSerializer
-    # permission_classes = [IsAuthenticated]
-
-    # def update(self, request, *args, **kwargs):
-    #     event = self.get_object()
-    #     user = event.user
-    #     try:
-    #         event.register_user
-    #         return Response({"message": "Registration successful"})
-    #     except ValidationError as e:
-    #         return Response({"error": str(e)}, status=400)
+  
 
 
 class CommentListCreateView(generics.ListCreateAPIView):
