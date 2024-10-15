@@ -3,10 +3,12 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+# Validator for ensuring event date is in the future
 def validate_future_date(value):
     if value < timezone.now():
         raise ValidationError('The time cannot be in the past')
 
+# Model for notifications to users
 class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='notifications', on_delete=models.CASCADE)
     message = models.TextField()
@@ -21,7 +23,7 @@ class Notification(models.Model):
         self.is_read = True
         self.save()
 
-# Updating the Event model to send notifications
+# Model representing an event
 class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -29,7 +31,7 @@ class Event(models.Model):
     organizer = models.CharField(max_length=255)
     capacity = models.PositiveIntegerField()
     location = models.CharField(max_length=255)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(default=timezone.now)
     registered_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='registered_events', blank=True)
 
     class Meta:
@@ -70,7 +72,7 @@ class Event(models.Model):
             raise ValidationError("User is not registered for this event")
 
 
-
+# Model for comments on events
 class Comment(models.Model):
     event = models.ForeignKey(Event, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)

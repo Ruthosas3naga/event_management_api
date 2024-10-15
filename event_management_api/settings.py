@@ -25,7 +25,7 @@ SECRET_KEY = '&b&&yy-&9+#4)rpem@ueg$)@c3!f(f#qm32mpb*1+x6awo=+&c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 
@@ -38,11 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'events_app',
-    'account',
+    'accounts',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'rest_framework_simplejwt',
+    'djoser',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
@@ -52,7 +56,19 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+from datetime import timedelta
+...
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
 
@@ -89,13 +105,13 @@ TEMPLATES = [
     },
 ]
 
-# # Security settings
-# SECURE_BROWSER_XSS_FILTER = True
-# X_FRAME_OPTIONS = 'DENY'
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
-# SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
-# CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP connections to HTTPS
+SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
+CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
 
 
 WSGI_APPLICATION = 'event_management_api.wsgi.application'
@@ -111,7 +127,7 @@ import os
 DATABASES = {
         'default':{
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'osas_db',
+        'NAME': 'osase_db',
         'USER': 'postgres',
         'PASSWORD': 'osas1234',
         'HOST': 'localhost',
@@ -167,6 +183,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 django_heroku.settings(locals())
