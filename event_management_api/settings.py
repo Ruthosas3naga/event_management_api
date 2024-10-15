@@ -25,7 +25,7 @@ SECRET_KEY = '&b&&yy-&9+#4)rpem@ueg$)@c3!f(f#qm32mpb*1+x6awo=+&c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 
