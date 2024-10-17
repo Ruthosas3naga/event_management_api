@@ -60,9 +60,11 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
 MIDDLEWARE = [
@@ -110,13 +112,24 @@ DATABASES = {
     }
 }
 
-# Update the database configuration with the DATABASE_URL for production
-DATABASE_URL = os.getenv('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=True)
+# import dj_database_url
+# import os
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL')
+#     )
+# }
+
+# Update the database configuration with the DATABASE_URL for production
+# DATABASE_URL = os.getenv('DATABASE_URL')
+# if DATABASE_URL:
+#     DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=True)
+
+# # Activate Django-Heroku.
+# django_heroku.settings(locals())
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
