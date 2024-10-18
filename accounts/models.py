@@ -42,9 +42,9 @@ class CustomUser(AbstractUser):
     """
     phone_number = models.CharField(max_length=255, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    email = models.EmailField(max_length=255, unique=True)  # Make email unique
+    email = models.EmailField(max_length=255, unique=True)  
 
-    USERNAME_FIELD = 'email'  # Use email for authentication
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']  # Required fields for creating a superuser
+    USERNAME_FIELD = 'email'  
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']  
 
-    objects = CustomUserManager()  # Use the custom manager
+    objects = CustomUserManager() 
