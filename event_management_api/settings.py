@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 't']
 
-ALLOWED_HOSTS = ['event-management22-411dfd4ca803.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['event-app30-4103b91b0d38.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -112,7 +112,14 @@ DATABASES = {
     }
 }
 
-# import dj_database_url
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 # import os
 
 # DATABASES = {
@@ -121,13 +128,13 @@ DATABASES = {
 #     )
 # }
 
-# Update the database configuration with the DATABASE_URL for production
+
 # DATABASE_URL = os.getenv('DATABASE_URL')
 # if DATABASE_URL:
 #     DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=True)
 
-# # Activate Django-Heroku.
-# django_heroku.settings(locals())
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 
 
