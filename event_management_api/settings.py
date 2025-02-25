@@ -6,13 +6,13 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-actual-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 't']
 
 # Set Allowed Hosts for PythonAnywhere
-ALLOWED_HOSTS = ['yourusername.pythonanywhere.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['osasenaga.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
