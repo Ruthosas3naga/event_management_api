@@ -99,13 +99,13 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
   
 class EventRegistrationView(generics.UpdateAPIView):
     """Handles event registration."""
-    queryset = Event.objects.all()
-
-    def get_serializer_class(self):
+    def get(self, request, *args, **kwargs):
+        # Add this check to short-circuit when generating the schema
         if getattr(self, 'swagger_fake_view', False):
             return None
-        return EventRegistrationSerializer
-  
+
+        # Your existing logic for the GET request
+        return super().get(request, *args, **kwargs)
 
 
 class CommentListCreateView(generics.ListCreateAPIView):
@@ -124,9 +124,10 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        # Optional: Limit comments to the authenticated user
         user = self.request.user
-        return self.queryset.filter(user=user)  # Optional: only allow users to modify their comments
+        if user.is_authenticated:
+            return self.queryset.filter(user=user)
+        return self.queryset.none()
 
 class NotificationListView(generics.ListAPIView):
     """Handles listing notifications for the authenticated user."""
