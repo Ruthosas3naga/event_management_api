@@ -36,12 +36,12 @@ INSTALLED_APPS = [
 # Database configuration (Only One Block)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Use MySQL for PythonAnywhere
-        'NAME': os.getenv('DB_NAME', 'osasenaga$event-management'),
-        'USER': os.getenv('DB_USER', 'osasenaga'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),  # Keep the password secret with env vars
-        'HOST': os.getenv('DB_HOST', 'osasenaga.mysql.pythonanywhere-services.com'),
-        'PORT': '3306',  # MySQL default port
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'osasenaga$event-management',
+        'USER': 'osasenaga',
+        'PASSWORD':  'Iamjesuloba11@#',  
+        'HOST': 'osasenaga.mysql.pythonanywhere-services.com',
+        'PORT': '3306', 
     }
 }
 
