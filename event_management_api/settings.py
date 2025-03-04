@@ -39,7 +39,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'osasenaga$event-management',
         'USER': 'osasenaga',
-        'PASSWORD':  'Iamjesuloba11@#',  
+        'PASSWORD':  os.getenv('DB_PASSWORD', 'your-actual-secret-key'), 
         'HOST': 'osasenaga.mysql.pythonanywhere-services.com',
         'PORT': '3306', 
     }
