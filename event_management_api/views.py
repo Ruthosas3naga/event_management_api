@@ -7,6 +7,6 @@ def home(request):
     - <a href="https://osasenaga.pythonanywhere.com/api/register/">Register</a>
     - <a href="https://osasenaga.pythonanywhere.com/api/events/">Events</a>
     - <a href="https://osasenaga.pythonanywhere.com/api/notifications/">Notifications</a>
-    - <a href="https://osasenaga.pythonanywhere.com/api/comments/">Comments</a>
+    - <a href="https://osasenaga.pythonanywhere.com/api/comments/1/">Comments</a>
     """
     return HttpResponse(response_text, status=200) 
